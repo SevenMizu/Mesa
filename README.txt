@@ -10,7 +10,3 @@ You must provide two CSV files in the same directory:
 
 Then install dependencies:
  pip install mesa pandas numpy
-
-Example:
-
-python experiments.py
