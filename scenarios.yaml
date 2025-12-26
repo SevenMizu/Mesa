@@ -1,0 +1,102 @@
+# Policy scenario configurations for the Household Savings ABM.
+#
+# Four core scenarios to study different policy levers and their distributional effects:
+# 1. Baseline: Status quo policies for US & UK (reference path)
+# 2. Interest rate shock: Higher return on savings (+2 percentage points)
+# 3. Tax incentive: More generous tax-favoured saving (stronger subsidy/match)
+# 4. Auto-enrolment: Behavioural policy (automatic enrollment with default contribution)
+#
+# Households are initialised from SCF/WAS microdata. Each scenario shows emergent
+# savings rates, wealth paths, and inequality across agents.
+
+scenarios:
+  baseline:
+    description: |
+      Status quo policies (US & UK).
+      
+      Reference scenario: households initialised from SCF/WAS with stylised
+      "current regime" financial and policy parameters for each country.
+      
+      Purpose: gives a reference path for savings rates and wealth distributions,
+      showing emergent inequality from heterogeneity + baseline institutional rules.
+    
+    US:
+      tax_credit_rate: 0.0
+      base_savings_rate: 0.1
+      interest_rate: 0.02
+    
+    UK:
+      auto_enroll: false
+      mandatory_contrib_rate: 0.0
+      interest_rate: 0.02
+
+  interest_rate_shock:
+    description: |
+      Higher return on savings (baseline + 2 percentage points).
+      
+      Same institutional rules as baseline, but increased interest rate on savings.
+      This is a pure financial-price change with no behaviour-rule modifications.
+      
+      Purpose: isolate how a price signal (return on savings) alters emergent aggregate
+      savings, wealth accumulation paths, and inequality in US vs UK.
+    
+    US:
+      tax_credit_rate: 0.0
+      base_savings_rate: 0.1
+      interest_rate: 0.04
+    
+    UK:
+      auto_enroll: false
+      mandatory_contrib_rate: 0.0
+      interest_rate: 0.04
+
+  tax_incentive:
+    description: |
+      More generous tax-favoured saving (tax break/subsidy/match).
+      
+      Same interest rate as baseline, but introduce or strengthen a tax incentive
+      for long-term savings (e.g. higher effective return or contribution match up to a cap).
+      This is a rule-based policy change, not a market-price change.
+      
+      Purpose: study how a policy targeted at savings rules (not prices) changes
+      participation, wealth accumulation, and distributional outcomes across agents.
+    
+    US:
+      tax_credit_rate: 0.20
+      base_savings_rate: 0.1
+      interest_rate: 0.02
+    
+    UK:
+      auto_enroll: false
+      mandatory_contrib_rate: 0.0
+      interest_rate: 0.02
+
+  auto_enrolment:
+    description: |
+      Behavioural policy shock: default automatic enrolment.
+      
+      Keep baseline financial parameters (interest rate, tax treatment), but change
+      behavioural/institutional rules: automatic enrolment into a pension/savings plan
+      with a default contribution rate, vs pure opt-in.
+      This is a small micro-rule tweak with potentially large macro effects.
+      
+      Purpose: show emergent effects from defaults on participation rates,
+      long-run savings accumulation, and wealth inequality.
+    
+    US:
+      tax_credit_rate: 0.0
+      base_savings_rate: 0.1
+      interest_rate: 0.02
+    
+    UK:
+      auto_enroll: true
+      mandatory_contrib_rate: 0.05
+      interest_rate: 0.02
+
+# Experiment-level settings (applied to all scenarios)
+experiment:
+  runs: 100
+  years: 30
+  N: 1000
+  income_volatility: 0.05
+  bias_strength: 0.5
